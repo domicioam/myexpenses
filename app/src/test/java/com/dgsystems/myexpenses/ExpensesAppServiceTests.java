@@ -68,7 +68,6 @@ class ExpensesAppServiceTests {
 
 	@Test
 	void should_remove_expense() {
-
 		UUID expenseId = UUID.randomUUID();
 		BigDecimal value = new BigDecimal(10);
 		String description = "Candy";
