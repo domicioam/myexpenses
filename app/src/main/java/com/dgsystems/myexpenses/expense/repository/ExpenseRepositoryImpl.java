@@ -16,12 +16,21 @@ public class ExpenseRepositoryImpl implements ExpenseRepository { // this class 
 	}
 
 	public void save(Expense any) { // this method comes with Spring Data
-		expenses.add(any);
+		Optional<Expense> optionalExpense =  expenses.stream()
+				.filter(e -> e.getId() == any.getId())
+				.findFirst();
+
+		if(optionalExpense.isPresent()) {
+			expenses.remove(optionalExpense.get());
+			expenses.add(any);
+		} else {
+			expenses.add(any);
+		}
 	}
 
 	public Optional<Expense> expenseOfId(UUID newExpenseId) {
 		return expenses.stream()
-				.filter(e -> e.id().equals(newExpenseId))
+				.filter(e -> e.getId().equals(newExpenseId))
 				.findFirst();
 	}
 

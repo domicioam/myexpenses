@@ -1,5 +1,6 @@
 package com.dgsystems.myexpenses;
 
+import com.dgsystems.myexpenses.expense.application.UpdateExpenseCommand;
 import com.dgsystems.myexpenses.expense.application.RemoveExpenseCommand;
 import com.dgsystems.myexpenses.expense.core.Category;
 import com.dgsystems.myexpenses.expense.core.Expense;
@@ -83,5 +84,30 @@ class ExpensesAppServiceTests {
 		test.assertNoErrors();
 		test.assertComplete();
 		verify(expenseRepository, times(1)).removeExpense(expenseId);
+	}
+
+	@Test
+	void should_update_expense() {
+		UUID expenseId = UUID.randomUUID();
+		BigDecimal value = new BigDecimal(10);
+		String description = "Candy";
+		Category category = Category.Wants;
+
+		when(expenseRepository.expenseOfId(expenseId))
+				.thenReturn(Optional.of(new Expense(expenseId, value, description, category)));
+
+		BigDecimal newValue = new BigDecimal(20);
+		String newDescription = "NewCandy";
+		Category newCategory = Category.Needs;
+
+		Expense updatedExpense = new Expense(expenseId, newValue, newDescription, newCategory);
+
+		UpdateExpenseCommand command = new UpdateExpenseCommand(expenseId, newValue, newDescription, newCategory);
+		TestObserver test = expenseApplicationService.updateExpense(command).test();
+
+		test.assertNoErrors();
+		test.assertComplete();
+		verify(expenseRepository, times(1)).expenseOfId(any(UUID.class));
+		verify(expenseRepository, times(1)).save(updatedExpense);
 	}
 }

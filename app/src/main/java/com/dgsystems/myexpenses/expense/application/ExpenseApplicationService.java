@@ -6,6 +6,7 @@ import com.dgsystems.myexpenses.expense.core.ExpenseRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -38,7 +39,12 @@ public class ExpenseApplicationService {
 		return Single.create((source -> {
 			List<ExpenseDto> expenseDtos = expenseRepository.getExpenses()
 					.stream()
-					.map(e -> new ExpenseDto(e.category().toString(), e.description(), e.id(), e.value()))
+					.map(e ->
+							new ExpenseDto(
+									e.getCategory().toString(),
+									e.getDescription(),
+									e.getId(),
+									e.getValue()))
 					.collect(Collectors.toList());
 
 			source.onSuccess(expenseDtos);
@@ -55,6 +61,24 @@ public class ExpenseApplicationService {
 				source.onComplete();
 			}
 			else {
+				source.onError(new EntityNotFoundException());
+			}
+		});
+	}
+
+	public Completable updateExpense(UpdateExpenseCommand command) {
+		return Completable.create(source -> {
+			Optional<Expense> optionalExpense = expenseRepository.expenseOfId(command.getExpenseId());
+
+			if(optionalExpense.isPresent()) {
+				Expense expense = optionalExpense.get();
+				expense.setCategory(command.getNewCategory());
+				expense.setDescription(command.getNewDescription());
+				expense.setValue(command.getNewValue());
+
+				expenseRepository.save(expense);
+				source.onComplete();
+			} else {
 				source.onError(new EntityNotFoundException());
 			}
 		});

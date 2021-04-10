@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public class Expense {
-	private UUID id;
+	private final UUID id;
 	private String description;
 	private BigDecimal value;
 	private Category category;
@@ -15,21 +15,33 @@ public class Expense {
 		this.description = description;
 		this.category = category;
 	}
-	
-	public UUID id() {
+
+	public UUID getId() {
 		return id;
 	}
 
-	public String description() {
+	public String getDescription() {
 		return description;
 	}
 
-	public BigDecimal value() {
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public BigDecimal getValue() {
 		return value;
 	}
 
-	public Category category() {
+	public void setValue(BigDecimal value) {
+		this.value = value;
+	}
+
+	public Category getCategory() {
 		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override
