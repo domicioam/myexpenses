@@ -5,6 +5,7 @@ import com.dgsystems.myexpenses.expense.core.ExpenseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class ExpenseRepositoryImpl implements ExpenseRepository { // this class should go away once we start using Spring Data
@@ -18,14 +19,17 @@ public class ExpenseRepositoryImpl implements ExpenseRepository { // this class 
 		expenses.add(any);
 	}
 
-	public Expense expenseOfId(UUID newExpenseId) {
+	public Optional<Expense> expenseOfId(UUID newExpenseId) {
 		return expenses.stream()
 				.filter(e -> e.id().equals(newExpenseId))
-				.findAny()
-				.get();
+				.findFirst();
 	}
 
 	public List<Expense> getExpenses() {
 		return expenses;
+	}
+
+	public void removeExpense(UUID expenseId) {
+		expenses.remove(expenseId);
 	}
 }

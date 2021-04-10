@@ -4,9 +4,11 @@ import com.dgsystems.myexpenses.expense.core.Expense;
 import com.dgsystems.myexpenses.expense.core.ExpenseRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public class ExpenseApplicationService {
@@ -41,5 +43,20 @@ public class ExpenseApplicationService {
 
 			source.onSuccess(expenseDtos);
 		}));
+	}
+
+	public Completable removeExpense(RemoveExpenseCommand command) {
+		return Completable.create(source -> {
+			Optional<Expense> optionalExpense = expenseRepository.expenseOfId(command.getExpenseId());
+
+			if(optionalExpense.isPresent())
+			{
+				expenseRepository.removeExpense(command.getExpenseId());
+				source.onComplete();
+			}
+			else {
+				source.onError(new EntityNotFoundException());
+			}
+		});
 	}
 }
