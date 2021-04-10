@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
-public class ExpenseApplicationService {
+public class ExpenseApplicationService implements ExpenseApplicationQueryService, ExpenseApplicationCommandService {
 	private ExpenseRepository expenseRepository;
 
 	public ExpenseApplicationService(ExpenseRepository expenseRepository) {
