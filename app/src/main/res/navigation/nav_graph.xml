@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/expenseList">
 
+    <fragment
+        android:id="@+id/expenseList"
+        android:name="com.dgsystems.myexpenses.app.ExpensesFragment"
+        android:label="Expenses"
+        tools:layout="@layout/fragment_expenses_list">
+    </fragment>
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.dgsystems.myexpenses.app.FirstFragment"
