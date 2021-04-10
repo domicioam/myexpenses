@@ -8,6 +8,10 @@ import io.reactivex.rxjava3.core.Single;
 public class ExpenseApplicationService {
 	private ExpenseRepository expenseRepository;
 
+	public ExpenseApplicationService(ExpenseRepository expenseRepository) {
+		this.expenseRepository = expenseRepository;
+	}
+
 	public Single<UUID> newExpense(NewExpenseCommand command) throws UnsupportedOperationException {
 		return Single.create(source -> {
 			UUID expenseId = UUID.randomUUID();
@@ -19,7 +23,7 @@ public class ExpenseApplicationService {
 							command.getDescription(),
 							command.getCategory());
 
-			this.expenseRepository.save(expense);
+			expenseRepository.save(expense);
 			source.onSuccess(expenseId);
 		});
 	}
