@@ -3,10 +3,14 @@ package com.dgsystems.myexpenses;
 import com.dgsystems.myexpenses.application.expense.Category;
 import com.dgsystems.myexpenses.application.expense.Expense;
 import com.dgsystems.myexpenses.application.expense.ExpenseApplicationService;
+import com.dgsystems.myexpenses.application.expense.ExpenseDto;
 import com.dgsystems.myexpenses.application.expense.ExpenseRepository;
 import com.dgsystems.myexpenses.application.expense.NewExpenseCommand;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -24,9 +28,6 @@ import io.reactivex.rxjava3.observers.TestObserver;
 
 @ExtendWith(MockitoExtension.class)
 class ExpensesAppServiceTests {
-	public ExpensesAppServiceTests() {
-		expenseRepository = new ExpenseRepository();
-	}
 	@Mock
 	ExpenseRepository expenseRepository;
 	@InjectMocks
@@ -42,5 +43,20 @@ class ExpensesAppServiceTests {
 		verify(this.expenseRepository, times(1)).save(Mockito.any(Expense.class));
 		assertNotNull(newExpenseId);
 		test.assertNoErrors();
+	}
+
+	@Test
+	void should_return_all_expenses() {
+		UUID expenseId = UUID.randomUUID();
+		BigDecimal value = new BigDecimal(10);
+		String description = "Candy";
+
+		List<Expense> expenses = Arrays.asList(new Expense(expenseId, value, description, Category.Wants));
+		Mockito.when(expenseRepository.getExpenses()).thenReturn(expenses);
+
+		TestObserver<List<ExpenseDto>> test = expenseApplicationService.getExpenses().test();
+		ExpenseDto expenseDto = test.values().get(0).get(0);
+		verify(expenseRepository, times(1)).getExpenses();
+		assertEquals(new ExpenseDto("Wants", description, expenseId, value), expenseDto);
 	}
 }

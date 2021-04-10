@@ -22,4 +22,7 @@ public class ExpenseRepository { // this class should go away once we start usin
 				.get();
 	}
 
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
 }
