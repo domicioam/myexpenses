@@ -1,4 +1,4 @@
-package com.dgsystems.myexpenses.application.expense;
+package com.dgsystems.myexpenses.expense.application;
 
 import java.math.BigDecimal;
 import java.util.Objects;

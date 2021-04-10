@@ -1,13 +1,16 @@
-package com.dgsystems.myexpenses.application.expense;
+package com.dgsystems.myexpenses.expense.repository;
+
+import com.dgsystems.myexpenses.expense.core.Expense;
+import com.dgsystems.myexpenses.expense.core.ExpenseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ExpenseRepository { // this class should go away once we start using Spring Data
+public class ExpenseRepositoryImpl implements ExpenseRepository { // this class should go away once we start using Spring Data
 	private List<Expense>  expenses;
 	
-	public ExpenseRepository() {
+	public ExpenseRepositoryImpl() {
 		expenses = new ArrayList<>();
 	}
 

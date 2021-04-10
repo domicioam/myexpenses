@@ -1,14 +1,13 @@
 package com.dgsystems.myexpenses;
 
-import com.dgsystems.myexpenses.application.expense.Category;
-import com.dgsystems.myexpenses.application.expense.Expense;
-import com.dgsystems.myexpenses.application.expense.ExpenseApplicationService;
-import com.dgsystems.myexpenses.application.expense.ExpenseDto;
-import com.dgsystems.myexpenses.application.expense.ExpenseRepository;
-import com.dgsystems.myexpenses.application.expense.NewExpenseCommand;
+import com.dgsystems.myexpenses.expense.core.Category;
+import com.dgsystems.myexpenses.expense.core.Expense;
+import com.dgsystems.myexpenses.expense.application.ExpenseApplicationService;
+import com.dgsystems.myexpenses.expense.application.ExpenseDto;
+import com.dgsystems.myexpenses.repository.repository.ExpenseRepositoryImpl;
+import com.dgsystems.myexpenses.expense.application.NewExpenseCommand;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +28,7 @@ import io.reactivex.rxjava3.observers.TestObserver;
 @ExtendWith(MockitoExtension.class)
 class ExpensesAppServiceTests {
 	@Mock
-	ExpenseRepository expenseRepository;
+	ExpenseRepositoryImpl expenseRepository;
 	@InjectMocks
 	ExpenseApplicationService expenseApplicationService;
 

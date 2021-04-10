@@ -1,7 +1,8 @@
-package com.dgsystems.myexpenses;
+package com.dgsystems.myexpenses.app;
 
 import android.os.Bundle;
 
+import com.dgsystems.myexpenses.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
