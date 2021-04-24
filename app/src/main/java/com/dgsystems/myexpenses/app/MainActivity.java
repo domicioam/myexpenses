@@ -4,18 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.dgsystems.myexpenses.R;
+import com.dgsystems.myexpenses.expense.presentation.ExpenseViewModel;
 import com.dgsystems.myexpenses.expense.presentation.NewExpenseActivity;
+import com.dgsystems.myexpenses.expense.presentation.NewExpenseFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.math.BigDecimal;
+
 public class MainActivity extends AppCompatActivity {
+
+    public static final int ADD_EXPENSE_REQUEST = 1;
+    public static final int EDIT_EXPENSE_REQUEST = 2;
+
+    private ExpenseViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +36,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        viewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), NewExpenseActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, ADD_EXPENSE_REQUEST);
             }
         });
     }
@@ -54,5 +68,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == ADD_EXPENSE_REQUEST && resultCode == RESULT_OK) {
+            String description = data.getStringExtra(NewExpenseFragment.EXTRA_DESCRIPTION);
+            String date = data.getStringExtra(NewExpenseFragment.EXTRA_DATE);
+            String category = data.getStringExtra(NewExpenseFragment.EXTRA_CATEGORY);
+            Double value = data.getDoubleExtra(NewExpenseFragment.EXTRA_VALUE, 0);
+
+            viewModel.newExpense(description, date, category, value);
+
+        }
     }
 }
