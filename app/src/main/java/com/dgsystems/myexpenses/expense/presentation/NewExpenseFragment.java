@@ -17,7 +17,7 @@ import com.dgsystems.myexpenses.R;
 
 public class NewExpenseFragment extends Fragment {
 
-    private ExpenseViewModel mViewModel;
+    private NewExpenseViewModel mViewModel;
 
     public static NewExpenseFragment newInstance() {
         return new NewExpenseFragment();
@@ -33,7 +33,7 @@ public class NewExpenseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(NewExpenseViewModel.class);
         // TODO: Use the ViewModel
 
         TextView messageTV = getView().findViewById(R.id.message);

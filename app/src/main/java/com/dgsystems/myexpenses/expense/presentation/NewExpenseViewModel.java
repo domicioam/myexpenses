@@ -2,9 +2,9 @@ package com.dgsystems.myexpenses.expense.presentation;
 
 import androidx.lifecycle.ViewModel;
 
-public class ExpenseViewModel extends ViewModel {
+public class NewExpenseViewModel extends ViewModel {
     // TODO: Implement the ViewModel
-    public ExpenseViewModel() {
+    public NewExpenseViewModel() {
         message = "Hello from view model.";
     }
 
