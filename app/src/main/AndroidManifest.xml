@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyExpenses">
-        <activity android:name=".app.NewExpenseActivity"></activity>
+        <activity android:name=".expense.presentation.NewExpenseActivity"></activity>
         <activity
             android:name=".app.MainActivity"
             android:label="@string/app_name"

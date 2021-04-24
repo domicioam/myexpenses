@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/expenseList"
-        android:name="com.dgsystems.myexpenses.app.ExpensesFragment"
+        android:name="com.dgsystems.myexpenses.expense.presentation.ExpensesFragment"
         android:label="Expenses"
         tools:layout="@layout/fragment_expenses_list">
     </fragment>

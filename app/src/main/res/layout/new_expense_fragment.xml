@@ -5,7 +5,7 @@
     android:id="@+id/new_expense"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.NewExpenseFragment">
+    tools:context=".expense.presentation.NewExpenseFragment">
 
     <TextView
         android:id="@+id/message"

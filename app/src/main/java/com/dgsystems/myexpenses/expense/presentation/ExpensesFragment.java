@@ -1,4 +1,4 @@
-package com.dgsystems.myexpenses.app;
+package com.dgsystems.myexpenses.expense.presentation;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.dgsystems.myexpenses.app;
+package com.dgsystems.myexpenses.expense.presentation;
 
 import androidx.lifecycle.ViewModel;
 
