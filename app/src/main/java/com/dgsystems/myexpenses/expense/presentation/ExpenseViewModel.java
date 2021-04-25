@@ -11,22 +11,18 @@ import com.dgsystems.myexpenses.expense.repository.ExpenseRepositoryImpl;
 import java.math.BigDecimal;
 
 public class ExpenseViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
-    public ExpenseViewModel() {
-        message = "Hello from view model.";
+    public ExpenseViewModel(ExpenseApplicationCommandService commandService) {
+        this.commandService = commandService;
     }
 
-    private String message;
-    public String getMessage() {
-        return message;
-    }
+    private final ExpenseApplicationCommandService commandService;
 
     public void newExpense(String description, String date, String category, Double value) {
-        ExpenseApplicationCommandService service = new ExpenseApplicationService(new ExpenseRepositoryImpl());
-
         Category categoryEnum = Category.valueOf(category);
+        NewExpenseCommand command = new NewExpenseCommand(new BigDecimal(value), description, categoryEnum, commandService);
+        command.execute();
 
-        NewExpenseCommand command = new NewExpenseCommand(new BigDecimal(value), description, categoryEnum);
-        service.newExpense(command); // use Command Pattern and move the app service and this call to the command
+        if(!command.isExecuted())
+            return;
     }
 }

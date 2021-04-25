@@ -4,17 +4,19 @@ import com.dgsystems.myexpenses.expense.core.Category;
 
 import java.math.BigDecimal;
 
-public class NewExpenseCommand {
-	public NewExpenseCommand(BigDecimal value, String description, Category category) {
+public class NewExpenseCommand extends Command {
+	public NewExpenseCommand(BigDecimal value, String description, Category category, ExpenseApplicationCommandService commandService) {
 		super();
 		this.value = value;
 		this.description = description;
 		this.category = category;
+		this.commandService = commandService;
 	}
 
 	private BigDecimal value;
 	private String description;
 	private Category category;
+	private ExpenseApplicationCommandService commandService;
 	
 	public BigDecimal getValue() {
 		return value;
@@ -58,5 +60,10 @@ public class NewExpenseCommand {
 		} else if (!value.equals(other.value))
 			return false;
 		return true;
+	}
+
+	@Override
+	public void execute() {
+		commandService.newExpense(this);
 	}
 }

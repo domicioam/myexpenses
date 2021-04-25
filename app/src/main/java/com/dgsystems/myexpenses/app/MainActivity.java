@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.dgsystems.myexpenses.R;
+import com.dgsystems.myexpenses.expense.application.ExpenseApplicationCommandService;
+import com.dgsystems.myexpenses.expense.application.ExpenseApplicationService;
 import com.dgsystems.myexpenses.expense.presentation.ExpenseViewModel;
+import com.dgsystems.myexpenses.expense.presentation.ExpenseViewModelFactory;
 import com.dgsystems.myexpenses.expense.presentation.NewExpenseActivity;
 import com.dgsystems.myexpenses.expense.presentation.NewExpenseFragment;
+import com.dgsystems.myexpenses.expense.repository.ExpenseRepositoryImpl;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.Nullable;
@@ -36,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
+        ExpenseApplicationCommandService service = new ExpenseApplicationService(new ExpenseRepositoryImpl());
+
+        viewModel = new ViewModelProvider(this, new ExpenseViewModelFactory(service)).get(ExpenseViewModel.class);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
