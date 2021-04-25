@@ -44,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this, new ExpenseViewModelFactory(service)).get(ExpenseViewModel.class);
 
+        viewModel.getAllExpenses()
+                .subscribe(e -> {
+
+                    // on next
+                }, e -> {
+                    // on error
+                }, () -> {
+                    // on complete
+                });
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
