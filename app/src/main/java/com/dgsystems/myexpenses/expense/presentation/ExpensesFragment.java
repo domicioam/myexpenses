@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dgsystems.myexpenses.R;
-import com.dgsystems.myexpenses.app.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.
@@ -65,7 +64,7 @@ public class ExpensesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyExpenseRecyclerViewAdapter(DummyContent.ITEMS));
+            recyclerView.setAdapter(new ExpenseDtoAdapter());
         }
         return view;
     }
