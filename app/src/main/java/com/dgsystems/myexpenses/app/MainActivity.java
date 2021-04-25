@@ -6,6 +6,8 @@ import android.os.Bundle;
 import com.dgsystems.myexpenses.R;
 import com.dgsystems.myexpenses.expense.application.ExpenseApplicationCommandService;
 import com.dgsystems.myexpenses.expense.application.ExpenseApplicationService;
+import com.dgsystems.myexpenses.expense.application.ExpenseDto;
+import com.dgsystems.myexpenses.expense.presentation.ExpenseDtoAdapter;
 import com.dgsystems.myexpenses.expense.presentation.ExpenseViewModel;
 import com.dgsystems.myexpenses.expense.presentation.ExpenseViewModelFactory;
 import com.dgsystems.myexpenses.expense.presentation.NewExpenseActivity;
@@ -17,14 +19,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.math.BigDecimal;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,18 +39,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ExpenseApplicationCommandService service = new ExpenseApplicationService(new ExpenseRepositoryImpl());
+        ExpenseApplicationService service = new ExpenseApplicationService(new ExpenseRepositoryImpl());
 
-        viewModel = new ViewModelProvider(this, new ExpenseViewModelFactory(service)).get(ExpenseViewModel.class);
+        final ExpenseDtoAdapter adapter = new ExpenseDtoAdapter();
+        viewModel = new ViewModelProvider(this, new ExpenseViewModelFactory(service, service)).get(ExpenseViewModel.class);
 
         viewModel.getAllExpenses()
                 .subscribe(e -> {
-
+                    adapter.submitList(e);
                     // on next
                 }, e -> {
                     // on error
-                }, () -> {
-                    // on complete
                 });
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -60,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), NewExpenseActivity.class);
                 startActivityForResult(intent, ADD_EXPENSE_REQUEST);
+            }
+        });
+
+        adapter.setOnItemClickListener(new ExpenseDtoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ExpenseDto expenseDto) {
+                // create intent for item details / edit
             }
         });
     }

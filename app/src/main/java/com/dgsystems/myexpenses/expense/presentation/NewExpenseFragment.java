@@ -52,8 +52,6 @@ public class NewExpenseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
-        // TODO: Use the ViewModel
 
         editTextDescription = getView().findViewById(R.id.description);
         editTextValue = getView().findViewById(R.id.value);

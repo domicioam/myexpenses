@@ -28,7 +28,8 @@ public class ExpenseApplicationService implements ExpenseApplicationQueryService
 							expenseId, 
 							command.getValue(), 
 							command.getDescription(),
-							command.getCategory());
+							command.getCategory(),
+							command.getDate());
 
 			expenseRepository.save(expense);
 			source.onSuccess(expenseId);
@@ -44,7 +45,8 @@ public class ExpenseApplicationService implements ExpenseApplicationQueryService
 									e.getCategory().toString(),
 									e.getDescription(),
 									e.getId(),
-									e.getValue()))
+									e.getValue(),
+									e.getDate()))
 					.collect(Collectors.toList());
 
 			source.onSuccess(expenseDtos);

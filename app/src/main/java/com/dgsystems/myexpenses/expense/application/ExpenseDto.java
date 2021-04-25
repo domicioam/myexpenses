@@ -1,6 +1,7 @@
 package com.dgsystems.myexpenses.expense.application;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -9,12 +10,14 @@ public class ExpenseDto {
     private final String description;
     private final UUID id;
     private final BigDecimal value;
+    private final Date date;
 
-    public ExpenseDto(String category, String description, UUID id, BigDecimal value) {
+    public ExpenseDto(String category, String description, UUID id, BigDecimal value, Date date) {
         this.category = category;
         this.description = description;
         this.id = id;
         this.value = value;
+        this.date = date;
     }
 
     public String getCategory() {
@@ -32,6 +35,7 @@ public class ExpenseDto {
     public BigDecimal getValue() {
         return value;
     }
+    public Date getDate() {return date;}
 
     @Override
     public boolean equals(Object o) {
